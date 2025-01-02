@@ -8,4 +8,9 @@ declare module "next-auth" {
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
-})
+  secret: process.env.AUTH_SECRET, // Secret untuk JWT
+  session: {
+    strategy: "jwt",  // Menggunakan JWT sebagai strategi session
+  },
+}
+)

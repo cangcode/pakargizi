@@ -6,7 +6,6 @@ import { auth } from '@/auth'
 
 export const Navbar = async () => {
   const session = await auth()
-  console.log(session?.user.image);
   
 
   return (
