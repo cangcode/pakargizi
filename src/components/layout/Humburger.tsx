@@ -31,8 +31,10 @@ export const Humburger = () => {
         {toggleNav ? (
           <>
             <X size={38} />
-            <div className='absolute bottom-[-10rem] right-2'>
-              <MenuList />
+            <div className='absolute bottom-[-12rem] right-2 rounded-lg shadow-lg bg-white'>
+              <div className='px-3'>
+                <MenuList />
+              </div>
             </div>
           </>
         ) : (
