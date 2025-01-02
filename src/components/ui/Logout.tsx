@@ -1,4 +1,5 @@
 import { signOut } from "@/auth"
+import Button from "./Button"
  
  const Logout = () => {
    return (
@@ -8,7 +9,7 @@ import { signOut } from "@/auth"
       await signOut()
     }}
   >
-    <button type="submit">Sign Out</button>
+    <Button text="Logout"/>
   </form>
    )
  }
