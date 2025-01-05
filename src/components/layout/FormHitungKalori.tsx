@@ -2,22 +2,25 @@
 import React, { useState } from 'react';
 import { hitungKebutuhanKalori } from '@/lib/kaloriKalkulator';
 import Button from '../ui/Button';
-import { cn } from '@/lib/utils';
-
+import {cn} from '@/lib/utils'
 const FormHitungKalori: React.FC = () => {
   const [usia, setUsia] = useState<number | string>('');
   const [berat, setBerat] = useState<number | string>('');
   const [tinggi, setTinggi] = useState<number | string>('');
+  
+  // Perbaiki state aktivitas dengan tipe yang lebih tepat
   const [aktivitas, setAktivitas] = useState<'sedentary' | 'light' | 'moderate' | 'active' | 'very active'>('sedentary');
   const [tujuan, setTujuan] = useState<'menurunkan' | 'menjaga' | 'menambah'>('menjaga');
+  
   const [hasilKalori, setHasilKalori] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validasi input
     if (usia && berat && tinggi && aktivitas && tujuan) {
       const kalori = hitungKebutuhanKalori({
-        gender: 'perempuan',
+        gender: 'perempuan', // Sesuaikan dengan input gender jika diperlukan
         usia: +usia,
         berat: +berat,
         tinggi: +tinggi,
@@ -25,7 +28,10 @@ const FormHitungKalori: React.FC = () => {
         tujuan
       });
 
-      setHasilKalori(parseFloat(kalori.toFixed(2)));
+      // Membulatkan angka kalori ke 2 angka desimal
+      const kaloriTerpotong = kalori.toFixed(2);
+
+      setHasilKalori(parseFloat(kaloriTerpotong)); // Mengubah string ke number
     } else {
       alert('Harap lengkapi semua data!');
     }
@@ -38,24 +44,6 @@ const FormHitungKalori: React.FC = () => {
     setAktivitas('sedentary');
     setTujuan('menjaga');
     setHasilKalori(null);
-  };
-
-  const getKaloriMessage = () => {
-    if (!hasilKalori) return '';
-
-    switch (tujuan) {
-      case 'menurunkan':
-        return `Hmm, buat nurunin berat badan, kamu cukup makan makanan setara ${hasilKalori} kalori sehari. Jangan khawatir, masih bisa ngemil kok, asal nggak berlebihan! `;
-
-      case 'menjaga':
-        return `Kalau kamu mau berat badan tetap segini-gini aja, cukup makan sekitar ${hasilKalori} kalori sehari. Jangan lupa olahraga, biar nggak cuma rebahan doang!`;
-
-      case 'menambah':
-        return `Misi tambah massa tubuh dimulai! Kamu butuh sekitar ${hasilKalori} kalori per hari. Tapi plis, makan sehat, jangan fast food melulu!`;
-      
-      default:
-        return '';
-    }
   };
 
   return (
@@ -89,8 +77,9 @@ const FormHitungKalori: React.FC = () => {
           onChange={(e) => setTinggi(e.target.value)}
         />
 
+        {/* Memastikan nilai yang dipilih adalah sesuai dengan tipe 'Aktivitas' */}
         <label className='font-semibold text-primGreen' htmlFor="aktivitas">Aktifitas :</label>
-        <select id='aktivitas' className='-mt-3 px-2 py-1 rounded-md border-2 border-secGreen text-secGreen' value={aktivitas} onChange={(e) => setAktivitas(e.target.value as 'sedentary' | 'light' | 'moderate' | 'active' | 'very active')}>
+        <select id='aktivitas' className='-mt-3  px-2 py-1 rounded-md border-2 border-secGreen text-secGreen' value={aktivitas} onChange={(e) => setAktivitas(e.target.value as 'sedentary' | 'light' | 'moderate' | 'active' | 'very active')}>
           <option value="sedentary">Pemalas</option>
           <option value="light">Aktifitas Ringan</option>
           <option value="moderate">Aktifitas Sedang</option>
@@ -98,22 +87,25 @@ const FormHitungKalori: React.FC = () => {
           <option value="very active">Sangat Aktif</option>
         </select>
 
+        {/* Pilihan tujuan */}
         <label className='font-semibold text-primGreen' htmlFor="program">Program :</label>
-        <select id='program' className='-mt-3 px-2 py-1 rounded-md border-2 border-secGreen text-secGreen' value={tujuan} onChange={(e) => setTujuan(e.target.value as 'menurunkan' | 'menjaga' | 'menambah')}>
+        <select id='program' className='-mt-3  px-2 py-1 rounded-md border-2 border-secGreen text-secGreen' value={tujuan} onChange={(e) => setTujuan(e.target.value as 'menurunkan' | 'menjaga' | 'menambah')}>
           <option value="menurunkan">Menurunkan Berat Badan</option>
           <option value="menjaga">Menjaga Berat Badan</option>
           <option value="menambah">Menambah Berat Badan</option>
         </select>
 
+        {/* Tombol Submit */}
         <div className='flex gap-4'>
-          <Button type="submit" text="Hitung Kebutuhan Kalori" />
-          <Button type="button" text="Reset" className={cn('bg-red-500 border-red-500 hover:text-red-500 hover:border-red-500')} onClick={handleReset} />
+        <Button type="submit" text="Hitung kebutuhan Kalori" />
+        <Button type="button" text="Reset" className={cn('bg-red-500 border-red-500 hover:text-red-500 hover:border-red-500')} onClick={handleReset}/>
         </div>
+
       </form>
 
       {hasilKalori && (
         <div className='bg-primGreen w-full p-2 rounded-md'>
-          <h3 className='text-white'>{getKaloriMessage()}</h3>
+          <h3 className='text-white'>Kebutuhan Kalori Harian: <span className='font-bold'>{hasilKalori}</span> kalori</h3>
         </div>
       )}
     </div>
