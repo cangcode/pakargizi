@@ -3,14 +3,21 @@ import { HeartHandshake } from 'lucide-react'
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from "next-auth/react"
+import Swal from 'sweetalert2'
 
 const FeatureCard = ({ judul, href }: { judul: string, href: string }) => {
     const { data: session } = useSession()
     const router = useRouter(); // Menambahkan useRouter
-
     const handleOnClick = () => {
         if (!session) {
-            alert('Anda harus login untuk mengakses fitur ini');
+            Swal.fire({
+                title: 'Silahkan login dulu!',
+                text: 'Fitur ini hanya bisa di akses setelah login :>',
+                icon: 'info',
+                confirmButtonText: 'Okeh',
+                confirmButtonColor: '#3E7B27',
+                iconColor:'#3E7B27',
+              })
         }else{
             router.push(href); // Melakukan redirect jika session tidak ada
         }
