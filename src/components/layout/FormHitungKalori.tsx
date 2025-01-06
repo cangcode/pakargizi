@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { hitungKebutuhanKalori } from '@/lib/kaloriKalkulator';
 import Button from '../ui/Button';
 import {cn} from '@/lib/utils'
+import Swal from 'sweetalert2';
 const FormHitungKalori: React.FC = () => {
   const [usia, setUsia] = useState<number | string>('');
   const [berat, setBerat] = useState<number | string>('');
@@ -11,16 +12,28 @@ const FormHitungKalori: React.FC = () => {
   // Perbaiki state aktivitas dengan tipe yang lebih tepat
   const [aktivitas, setAktivitas] = useState<'sedentary' | 'light' | 'moderate' | 'active' | 'very active'>('sedentary');
   const [tujuan, setTujuan] = useState<'menurunkan' | 'menjaga' | 'menambah'>('menjaga');
+  const [gender, setGender] = useState<'perempuan' | 'pria'>('perempuan');
   
   const [hasilKalori, setHasilKalori] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    if(Number(tinggi) > 252) {
+      setTinggi('')
+      return (
+        Swal.fire({
+          title: 'Serius tinggimu segitu?',
+          text: 'kamu ini titan atau apa? :o',
+          icon: 'question',
+          confirmButtonText: 'Okeh',
+          confirmButtonColor: '#3E7B27',
+        })
+      )
+    }
     // Validasi input
-    if (usia && berat && tinggi && aktivitas && tujuan) {
+    else if (gender && usia && berat && tinggi && aktivitas && tujuan) {
       const kalori = hitungKebutuhanKalori({
-        gender: 'perempuan', // Sesuaikan dengan input gender jika diperlukan
+        gender,
         usia: +usia,
         berat: +berat,
         tinggi: +tinggi,
@@ -39,6 +52,7 @@ const FormHitungKalori: React.FC = () => {
 
   const handleReset = () => {
     setUsia('');
+    setGender('pria');
     setBerat('');
     setTinggi('');
     setAktivitas('sedentary');
@@ -49,13 +63,20 @@ const FormHitungKalori: React.FC = () => {
   return (
     <div className='p-4'>
       <form onSubmit={handleSubmit} className='flex flex-col w-full md:w-96 gap-3 mx-auto my-10'>
-        <label className='font-semibold text-primGreen' htmlFor="usia">Usia (tahun):</label>
+
+        <label className='font-semibold text-primGreen' htmlFor="gender">Gender :</label>
+        <select id='gender' className='-mt-3  px-2 py-1 rounded-md border-2 border-secGreen text-secGreen' value={gender} onChange={(e) => setGender(e.target.value as 'pria' | 'perempuan')}>
+          <option value="perempuan">Perempuan</option>
+          <option value="pria">Pria</option>
+        </select>
+
+        <label className='font-semibold text-primGreen' htmlFor="bb">Usia (tahun):</label>
         <input
           className='-mt-2 ring-2 ring-secGreen px-2 py-1 rounded-md text-secGreen'
           type="number"
-          placeholder="Usia (tahun)"
+          placeholder="Berat Badan (Kg)"
           value={usia}
-          id='usia'
+          id='bb'
           onChange={(e) => setUsia(e.target.value)}
         />
         <label className='font-semibold text-primGreen' htmlFor="bb">Berat Badan (kg):</label>
@@ -105,7 +126,7 @@ const FormHitungKalori: React.FC = () => {
 
       {hasilKalori && (
         <div className='bg-primGreen w-full p-2 rounded-md'>
-          <h3 className='text-white'>Kebutuhan Kalori Harian: <span className='font-bold'>{hasilKalori}</span> kalori</h3>
+          <h3 className='text-white'>Halo, pejuang sehat! 🚀 Berdasarkan data yang kamu masukkan, kebutuhan kalori harianmu adalah <span className='font-bold'>{hasilKalori}</span> kalori, Ini adalah jumlah energi yang kamu butuhkan untuk {tujuan} berat badan kamu!, tetap semangat dan jangan lupa bahagia!</h3>
         </div>
       )}
     </div>
