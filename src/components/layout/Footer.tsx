@@ -1,5 +1,4 @@
 import React from 'react'
-import { MenuList } from '../ui/MenuList'
 import { routes } from '@/configs/routes'
 import Link from 'next/link'
 
