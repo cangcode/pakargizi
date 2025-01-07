@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from "@/components/layout/Hero"
 import FeatureCard from '../ui/FeatureCard'
-import { Badge, BadgeInfo, Calculator } from 'lucide-react'
+import { BadgeInfo, Calculator } from 'lucide-react'
 import Footer from '../layout/Footer'
 
 export  const  HomePage = async () => {

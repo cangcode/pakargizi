@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <div className='bg-primGreen flex flex-col gap-5 w-full justify-center p-4 pt-10'>
+    <div className='bg-primGreen flex flex-col gap-5 w-full justify-center p-4 pt-10 md:px-20'>
         <Link href={'/'} className='font-bold text-2xl text-white w-full'>Nutri Ta&apos;</Link>
         <ul className='w-full'>
             {routes.map((item,index)=>(
