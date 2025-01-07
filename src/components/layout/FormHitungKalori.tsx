@@ -18,7 +18,7 @@ const FormHitungKalori: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if(Number(tinggi) > 252) {
+    if(Number(tinggi) > 252 ) {
       setTinggi('')
       return (
         Swal.fire({

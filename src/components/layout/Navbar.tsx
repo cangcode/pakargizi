@@ -3,6 +3,8 @@ import { Login } from '../ui/Login'
 import { Humburger } from './Humburger'
 import { auth } from '@/auth'
 import Link from 'next/link'
+import { MenuList } from '../ui/MenuList'
+import { routes } from '@/configs/routes'
 
 
 export const Navbar = async () => {
@@ -17,6 +19,9 @@ export const Navbar = async () => {
           ):(
             <Login/>
           )}
+          <div className='hidden md:block'>
+            <MenuList menu={routes}/>
+          </div>
             <Humburger/>
         </div>
     </div>

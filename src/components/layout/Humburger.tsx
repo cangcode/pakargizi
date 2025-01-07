@@ -2,6 +2,7 @@
 import { X, Menu } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { MenuList } from '../ui/MenuList';
+import { routes } from '@/configs/routes';
 
 export const Humburger = () => {
   const [toggleNav, setToggleNav] = useState(false);
@@ -31,9 +32,9 @@ export const Humburger = () => {
         {toggleNav ? (
           <>
             <X size={38} />
-            <div className='absolute bottom-[-18rem] right-2 rounded-lg shadow-lg bg-white'>
+            <div className='absolute top-full mt-2 right-2 rounded-lg shadow-lg bg-white'>
               <div className='px-3'>
-                <MenuList />
+                <MenuList menu={routes}/>
               </div>
             </div>
           </>
@@ -41,9 +42,6 @@ export const Humburger = () => {
           <Menu size={38} />
         )}
       </div>
-      {windowWidth && windowWidth > 768 ? ( // Periksa apakah windowWidth sudah terisi
-        <MenuList />
-      ) : null}
     </div>
   );
 };
