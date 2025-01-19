@@ -4,6 +4,17 @@ import { hitungKebutuhanKalori } from '@/lib/kaloriKalkulator';
 import Button from '../ui/Button';
 import {cn} from '@/lib/utils'
 import Swal from 'sweetalert2';
+
+interface Menu {
+  id: number;
+  name: string;
+  deskripsi: string;
+  kalori: number;
+  karbohidrat: number;
+  lemak: number;
+  protein: number;
+}
+
 const FormHitungKalori: React.FC = () => {
   const [usia, setUsia] = useState<number | string>('');
   const [berat, setBerat] = useState<number | string>('');
@@ -13,11 +24,26 @@ const FormHitungKalori: React.FC = () => {
   const [aktivitas, setAktivitas] = useState<'sedentary' | 'light' | 'moderate' | 'active' | 'very active'>('sedentary');
   const [tujuan, setTujuan] = useState<'menurunkan' | 'menjaga' | 'menambah'>('menjaga');
   const [gender, setGender] = useState<'perempuan' | 'pria'>('perempuan');
+  const [menus, setMenus] = useState<Menu[]>([]);
   
   const [hasilKalori, setHasilKalori] = useState<number | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const response = await fetch(`/api/menus?tujuan=${encodeURIComponent(tujuan)}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    
+      
+      if (!response.ok) {
+        throw new Error("Gagal mengambil data!");
+      }
+    
+      const data = await response.json();
+      setMenus(data)
+    
+
     if(Number(tinggi) > 252 ) {
       setTinggi('')
       return (
@@ -125,9 +151,28 @@ const FormHitungKalori: React.FC = () => {
       </form>
 
       {hasilKalori && (
+        <>
         <div className='bg-primGreen w-full p-2 rounded-md'>
-          <h3 className='text-white'>Halo, pejuang sehat! 🚀 Berdasarkan data yang kamu masukkan, kebutuhan kalori harianmu adalah <span className='font-bold'>{hasilKalori}</span> kalori, Ini adalah jumlah energi yang kamu butuhkan untuk {tujuan} berat badan kamu!, tetap semangat dan jangan lupa bahagia!</h3>
+          <p className='text-white'>Halo, pejuang sehat! 🚀 Berdasarkan data yang kamu masukkan, kebutuhan kalori harianmu adalah <span className='font-bold'>{hasilKalori}</span> kalori, Ini adalah jumlah energi yang kamu butuhkan untuk {tujuan} berat badan kamu!, tetap semangat dan jangan lupa bahagia!</p>
         </div>
+        <div className='bg-primGreen w-full p-2 rounded-md mt-5'>
+            <h1 className='font-bold text-white text-xl'>Rekomendasi menu makanan</h1>
+            <div className='grid grid-cols-2 md:grid-cols-4 justify-center'>
+            {menus.map(((item,index) => (
+              <div key={index} className='text-white mt-4 border-2 border-white gap-x-2 p-2'>
+                <h2 className='font-semibold underline'>
+                {item.name}
+                </h2>
+                <p>Kalori : {item.kalori} kkal</p>
+                <p>Protein : {item.protein} g</p>
+                <p>Karbo : {item.karbohidrat} g</p>
+                <p>Lemak : {item.lemak} g</p>
+              </div>
+            )))}
+            </div>
+          </div>
+        </>
+        
       )}
     </div>
   );
