@@ -31,8 +31,14 @@ async function main() {
     { name: 'Telur Rebus', deskripsi: 'Dua butir telur rebus', program: 'menurunkan', kalori: 140, protein: 12.0, karbohidrat: 1.0, lemak: 10.0 },
     { name: 'Nasi Goreng Sehat', deskripsi: 'Nasi goreng dengan sedikit minyak dan sayuran', program: 'menjaga', kalori: 450, protein: 15.0, karbohidrat: 50.0, lemak: 10.0 },
     { name: 'Ikan Panggang', deskripsi: 'Ikan panggang dengan bumbu rempah', program: 'menurunkan', kalori: 350, protein: 25.0, karbohidrat: 5.0, lemak: 10.0 },
-    { name: 'Yoghurt Buah', deskripsi: 'Yoghurt rendah lemak dengan buah segar', program: 'menurunkan', kalori: 180, protein: 8.0, karbohidrat: 20.0, lemak: 5.0 }
-  ];
+    { name: 'Yoghurt Buah', deskripsi: 'Yoghurt rendah lemak dengan buah segar', program: 'menurunkan', kalori: 180, protein: 8.0, karbohidrat: 20.0, lemak: 5.0 },
+    { name: 'Tahu Tempe Bakar', deskripsi: 'Tahu dan tempe bakar dengan bumbu kecap', program: 'menjaga', kalori: 300, protein: 20.0, karbohidrat: 15.0, lemak: 10.0 },
+    { name: 'Jus Wortel Apel', deskripsi: 'Jus segar dari wortel dan apel tanpa gula tambahan', program: 'menurunkan', kalori: 100, protein: 1.0, karbohidrat: 25.0, lemak: 0.0 },
+    { name: 'Steak Dada Ayam', deskripsi: 'Dada ayam panggang dengan saus lada hitam', program: 'menjaga', kalori: 450, protein: 50.0, karbohidrat: 10.0, lemak: 10.0 },
+    { name: 'Kentang Panggang', deskripsi: 'Kentang panggang dengan sedikit minyak zaitun', program: 'menambah', kalori: 300, protein: 5.0, karbohidrat: 60.0, lemak: 5.0 },
+    { name: 'Bubur Ayam', deskripsi: 'Bubur ayam rendah lemak dengan topping seledri dan bawang goreng', program: 'menurunkan', kalori: 250, protein: 15.0, karbohidrat: 40.0, lemak: 5.0 }
+];
+
   
 
   // Insert data ke dalam tabel menusTable
