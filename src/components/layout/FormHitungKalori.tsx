@@ -29,7 +29,7 @@ const FormHitungKalori: React.FC = () => {
   const [tinggi, setTinggi] = useState<number | string>(''); 
 
   // Perbaiki state aktivitas dengan tipe yang lebih tepat
-  const [aktivitas, setAktivitas] = useState<'sedentary' | 'light' | 'moderate' | 'active' | 'very active'>('sedentary');
+  const [aktivitas, setAktivitas] = useState<'sedentary' | 'light' | 'moderate' | 'active' | 'very active'>('light');
   const [tujuan, setTujuan] = useState<'menurunkan' | 'menjaga' | 'menambah'>('menjaga');
   const [gender, setGender] = useState<'perempuan' | 'pria'>('perempuan');
   const [menus, setMenus] = useState<Menu[]>([]);
@@ -125,7 +125,7 @@ const FormHitungKalori: React.FC = () => {
 
         <label className='font-semibold text-primGreen' htmlFor="aktivitas">Aktifitas :</label>
         <select id='aktivitas' className='-mt-3 px-2 py-1 rounded-md border-2 border-secGreen text-secGreen' value={aktivitas} onChange={(e) => setAktivitas(e.target.value as 'sedentary' | 'light' | 'moderate' | 'active' | 'very active')}>
-          <option value="sedentary">Pemalas Ladde</option>
+          <option value="sedentary">Hanya Rebahan</option>
           <option value="light">Sangat Ringan</option>
           <option value="moderate">Ringan</option>
           <option value="active">Sedang</option>
